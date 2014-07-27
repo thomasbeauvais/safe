@@ -11,7 +11,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Collection;
@@ -30,12 +29,6 @@ import static org.awkard.strategy.IncrementalStrategy.SynchronizationType.*;
 @RunWith(Parameterized.class)
 public class IncrementalStrategyTest extends DefaultUnitTest
 {
-    static final File localRoot = new File("/safe/Code/personal/safe/data/local");
-    static final File serverRoot = new File("/safe/Code/personal/safe/data/server");
-
-    static final LocalFileTree local = new LocalFileTree(localRoot);
-    static final LocalFileTree server = new LocalFileTree(serverRoot);
-
     final String[] expectedPaths;
     final SynchronizationType[] synchronizationTypes;
 
@@ -132,33 +125,4 @@ public class IncrementalStrategyTest extends DefaultUnitTest
             Assert.assertEquals("Path mismatch", expectedPath, node.getPath());
         }
     }
-
-//        final SimpleFileVisitor<Path> fileVisitor = new SimpleFileVisitor<Path>()
-//        {
-//            @Override
-//            public FileVisitResult preVisitDirectory(Path dir, BasicFileAttributes attrs) throws IOException
-//            {
-//                System.out.println(dir);
-//
-//                return dir.toFile().canRead() ? FileVisitResult.CONTINUE : FileVisitResult.SKIP_SUBTREE;
-//            }
-//
-//            @Override
-//            public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException
-//            {
-//                System.out.println(file);
-//
-//                return super.visitFile(file, attrs);
-//            }
-//
-//            @Override
-//            public FileVisitResult visitFileFailed(Path file, IOException exc) throws IOException
-//            {
-//                exc.printStackTrace();
-//
-//                return FileVisitResult.CONTINUE;
-//            }
-//        };
-//
-//        Files.walkFileTree(root.toPath(), fileVisitor);
 }

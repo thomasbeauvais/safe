@@ -17,6 +17,12 @@ import java.io.File;
  */
 public class DefaultUnitTest
 {
+    protected static final File localRoot = new File("/safe/Code/personal/safe/data/local");
+    protected static final File serverRoot = new File("/safe/Code/personal/safe/data/server");
+
+    protected static final LocalFileTree local = new LocalFileTree(localRoot);
+    protected static final LocalFileTree server = new LocalFileTree(serverRoot);
+
     static final PeriodFormatter formatter = new PeriodFormatterBuilder()
             .appendDays()
             .appendSuffix("d")
