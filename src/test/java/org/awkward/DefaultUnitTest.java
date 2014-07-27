@@ -1,6 +1,7 @@
 package org.awkward;
 
-import org.awkard.safe.local.LocalFileTree;
+import org.awkward.safe.model.LocalFileTree;
+import org.awkward.safe.visitor.PrintTreeVisitor;
 import org.joda.time.format.PeriodFormatter;
 import org.joda.time.format.PeriodFormatterBuilder;
 import org.junit.After;
@@ -42,12 +43,14 @@ public class DefaultUnitTest
     @Before
     public void start()
     {
+        local.visit(new PrintTreeVisitor());
+
         this.start = System.currentTimeMillis();
     }
 
     @After
     public void stop()
     {
-        System.out.println(System.currentTimeMillis() - start);
+        System.out.println(System.currentTimeMillis() - start + " ms");
     }
 }

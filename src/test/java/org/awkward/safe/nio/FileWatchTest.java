@@ -1,6 +1,7 @@
 package org.awkward.safe.nio;
 
 import org.apache.commons.io.IOUtils;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import javax.xml.bind.annotation.adapters.HexBinaryAdapter;
@@ -24,6 +25,7 @@ import static java.nio.file.StandardWatchEventKinds.*;
 public class FileWatchTest
 {
     @Test
+    @Ignore
     public void file_watch() throws IOException, InterruptedException, NoSuchAlgorithmException
     {
         final WatchService watcher = FileSystems.getDefault().newWatchService();
