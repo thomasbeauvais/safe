@@ -18,15 +18,28 @@ import java.util.Queue;
  */
 public class IncrementalStrategy
 {
-
-    private final SynchronizationType[] synchronizationTypes;
+    private SynchronizationType[] synchronizationTypes;
 
     public enum SynchronizationType
     {
         MODIFIED_FILES,
         NEW_FILES,
         NEW_DIRECTORIES,
-        FULL
+        FULL;
+    }
+    public IncrementalStrategy()
+    {
+
+    }
+
+    public SynchronizationType[] getSynchronizationTypes()
+    {
+        return synchronizationTypes;
+    }
+
+    public void setSynchronizationTypes(SynchronizationType[] synchronizationTypes)
+    {
+        this.synchronizationTypes = synchronizationTypes;
     }
 
     public IncrementalStrategy(SynchronizationType ... synchronizationTypes)

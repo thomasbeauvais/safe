@@ -1,7 +1,6 @@
 package org.awkward;
 
-import org.awkward.safe.model.LocalFileTree;
-import org.awkward.safe.visitor.PrintTreeVisitor;
+import org.awkward.safe.model.Repository;
 import org.joda.time.format.PeriodFormatter;
 import org.joda.time.format.PeriodFormatterBuilder;
 import org.junit.After;
@@ -21,8 +20,8 @@ public class DefaultUnitTest
     protected static final File localRoot = new File("/safe/Code/personal/safe/data/local");
     protected static final File serverRoot = new File("/safe/Code/personal/safe/data/server");
 
-    protected static final LocalFileTree local = new LocalFileTree(localRoot);
-    protected static final LocalFileTree server = new LocalFileTree(serverRoot);
+    protected static final Repository local = new Repository();
+    protected static final Repository server = new Repository();
 
     static final PeriodFormatter formatter = new PeriodFormatterBuilder()
             .appendDays()
@@ -37,14 +36,9 @@ public class DefaultUnitTest
 
     private long start;
 
-    private File root;
-    private LocalFileTree tree;
-
     @Before
     public void start()
     {
-        local.visit(new PrintTreeVisitor());
-
         this.start = System.currentTimeMillis();
     }
 

@@ -1,6 +1,5 @@
 package org.awkward.safe.data;
 
-import org.awkward.safe.model.DirectoryNode;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
@@ -10,6 +9,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
  * @author Silbury Solutions, Deutschland - Thomas Beauvais (thomas.beauvais@silbury.de)
  * @since 27.07.14
  */
-public interface DirectoryNodeRepository extends JpaRepository<DirectoryNode, String>
+public interface RepositoryRepository extends JpaRepository<org.awkward.safe.model.Repository, String>
 {
+    org.awkward.safe.model.Repository findByName(String name);
 }

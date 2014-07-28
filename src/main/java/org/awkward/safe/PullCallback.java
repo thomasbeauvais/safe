@@ -1,6 +1,7 @@
-package org.awkward.safe.model;
+package org.awkward.safe;
 
-import javax.persistence.Entity;
+import org.awkward.safe.client.ClientRepository;
+import org.awkward.safe.model.Node;
 
 /**
  * TODO:  Please document properly all classes and methods using the Silbury JavaDoc Guidelines
@@ -9,23 +10,16 @@ import javax.persistence.Entity;
  * @author Silbury Solutions, Deutschland - Thomas Beauvais (thomas.beauvais@silbury.de)
  * @since 27.07.14
  */
-@Entity
-public class Repository extends DirectoryNode
+public class PullCallback
 {
-    public String name;
+    private String node;
 
-    public Repository()
+    public PullCallback(ClientRepository clientRepository, Node node)
     {
     }
 
-    public Repository(String name)
+    public String getNode()
     {
-        this.name = name;
-    }
-
-    @Override
-    public String toString()
-    {
-        return name;
+        return node;
     }
 }

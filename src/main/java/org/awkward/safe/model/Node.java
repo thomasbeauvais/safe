@@ -14,7 +14,7 @@ import javax.persistence.*;
  */
 @Entity
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
-public abstract class Node
+public abstract class Node implements Comparable<Node>
 {
     @Id
     @GeneratedValue(generator = "system-uuid")
@@ -29,4 +29,15 @@ public abstract class Node
     public Version version;
 
     public abstract void visit(Visitor visitor);
+
+    @Override
+    public int compareTo(Node that)
+    {
+        return this.version.path.compareTo(that.version.path);
+    }
+
+    public String getName()
+    {
+        return version.getName();
+    }
 }

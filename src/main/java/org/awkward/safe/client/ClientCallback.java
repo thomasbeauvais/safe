@@ -1,7 +1,8 @@
-package org.awkward.safe.data;
+package org.awkward.safe.client;
 
-import org.awkward.safe.model.DirectoryNode;
-import org.springframework.data.jpa.repository.JpaRepository;
+import org.awkward.safe.model.Node;
+
+import java.util.Queue;
 
 /**
  * TODO:  Please document properly all classes and methods using the Silbury JavaDoc Guidelines
@@ -10,6 +11,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
  * @author Silbury Solutions, Deutschland - Thomas Beauvais (thomas.beauvais@silbury.de)
  * @since 27.07.14
  */
-public interface DirectoryNodeRepository extends JpaRepository<DirectoryNode, String>
+public interface ClientCallback
 {
+    boolean doPush(Queue<Node> transferQueue);
+
+    boolean doPull(Queue<Node> transferQueue);
 }

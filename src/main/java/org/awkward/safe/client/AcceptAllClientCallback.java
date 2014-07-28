@@ -1,6 +1,8 @@
-package org.awkward.safe.model;
+package org.awkward.safe.client;
 
-import javax.persistence.Entity;
+import org.awkward.safe.model.Node;
+
+import java.util.Queue;
 
 /**
  * TODO:  Please document properly all classes and methods using the Silbury JavaDoc Guidelines
@@ -9,23 +11,17 @@ import javax.persistence.Entity;
  * @author Silbury Solutions, Deutschland - Thomas Beauvais (thomas.beauvais@silbury.de)
  * @since 27.07.14
  */
-@Entity
-public class Repository extends DirectoryNode
+public class AcceptAllClientCallback implements ClientCallback
 {
-    public String name;
-
-    public Repository()
+    @Override
+    public boolean doPush(Queue<Node> transferQueue)
     {
-    }
-
-    public Repository(String name)
-    {
-        this.name = name;
+        return true;
     }
 
     @Override
-    public String toString()
+    public boolean doPull(Queue<Node> transferQueue)
     {
-        return name;
+        return true;
     }
 }

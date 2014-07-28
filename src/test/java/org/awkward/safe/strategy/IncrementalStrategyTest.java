@@ -1,10 +1,11 @@
-package org.awkward.safe.model.local;
+package org.awkward.safe.strategy;
 
-import org.awkward.safe.CompareResults;
-import org.awkward.safe.model.LocalFileTree;
-import org.awkward.safe.model.Node;
-import org.awkward.strategy.IncrementalStrategy;
 import org.awkward.DefaultUnitTest;
+import org.awkward.safe.CompareResults;
+import org.awkward.safe.model.Node;
+import org.awkward.safe.model.NodeFactory;
+import org.awkward.safe.model.Repository;
+import org.awkward.strategy.IncrementalStrategy;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -29,15 +30,19 @@ import static org.awkward.strategy.IncrementalStrategy.SynchronizationType.*;
 @RunWith(Parameterized.class)
 public class IncrementalStrategyTest extends DefaultUnitTest
 {
+    private static NodeFactory nodeFactory;
+
     final String[] expectedPaths;
     final SynchronizationType[] synchronizationTypes;
 
-    private final LocalFileTree source;
-    private final LocalFileTree destination;
+    private final Repository source;
+    private final Repository destination;
 
     @BeforeClass
     public static void initialize() throws InterruptedException, IOException
     {
+        nodeFactory.create(localRoot, local);
+        nodeFactory.create(serverRoot, server);
     }
 
     @Parameterized.Parameters
@@ -48,7 +53,7 @@ public class IncrementalStrategyTest extends DefaultUnitTest
                         local,
                         server,
                         new String[]{
-                                "/safe/Code/personal/safe/data/local/dir2"
+                                "/dir2"
                         },
                         new SynchronizationType[]{NEW_DIRECTORIES}
                 },
@@ -56,7 +61,7 @@ public class IncrementalStrategyTest extends DefaultUnitTest
                         local,
                         server,
                         new String[]{
-                                "/safe/Code/personal/safe/data/local/dir1/fil7",
+                                "/dir1/fil7",
                         },
                         new SynchronizationType[]{NEW_FILES}
                 },
@@ -64,7 +69,7 @@ public class IncrementalStrategyTest extends DefaultUnitTest
                         local,
                         server,
                         new String[]{
-                                "/safe/Code/personal/safe/data/local/fil5",
+                                "/fil5",
                         },
                         new SynchronizationType[]{MODIFIED_FILES}
                 },
@@ -72,7 +77,7 @@ public class IncrementalStrategyTest extends DefaultUnitTest
                         server,
                         local,
                         new String[]{
-                                "/safe/Code/personal/safe/data/server/dir3"
+                                "/dir3"
                         },
                         new SynchronizationType[]{NEW_DIRECTORIES}
                 },
@@ -80,8 +85,8 @@ public class IncrementalStrategyTest extends DefaultUnitTest
                         server,
                         local,
                         new String[]{
-                                "/safe/Code/personal/safe/data/server/fil2",
-                                "/safe/Code/personal/safe/data/server/dir1/fil3"
+                                "/dir1/fil3",
+                                "/fil2"
                         },
                         new SynchronizationType[]{NEW_FILES}
                 },
@@ -89,14 +94,14 @@ public class IncrementalStrategyTest extends DefaultUnitTest
                         server,
                         local,
                         new String[]{
-                                "/safe/Code/personal/safe/data/server/fil1"
+                                "/fil1"
                         },
                         new SynchronizationType[]{MODIFIED_FILES}
                 }
         });
     }
 
-    public IncrementalStrategyTest(LocalFileTree source, LocalFileTree destination, String[] expectedPaths, SynchronizationType... synchronizationTypes)
+    public IncrementalStrategyTest(Repository source, Repository destination, String[] expectedPaths, SynchronizationType... synchronizationTypes)
     {
         this.source = source;
         this.destination = destination;
@@ -107,8 +112,8 @@ public class IncrementalStrategyTest extends DefaultUnitTest
     @Test
     public void test()
     {
-        System.out.println("Source                  :" + source.getRoot().version.path);
-        System.out.println("Destination             :" + destination.getRoot().version.path);
+        System.out.println("Source                  :" + source);
+        System.out.println("Destination             :" + destination);
         System.out.println("SynchronizationType[]   :" + Arrays.toString(synchronizationTypes));
 
         final CompareResults compare = source.compare(destination);
@@ -120,7 +125,7 @@ public class IncrementalStrategyTest extends DefaultUnitTest
         for (String expectedPath : expectedPaths)
         {
             final Node node = transferQueue.poll();
-            
+
             Assert.assertNotNull("Found null node.  Expected path: " + expectedPath, node);
             Assert.assertEquals("Path mismatch", expectedPath, node.version.path);
         }

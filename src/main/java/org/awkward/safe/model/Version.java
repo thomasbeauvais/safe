@@ -1,5 +1,7 @@
 package org.awkward.safe.model;
 
+import org.awkward.safe.server.PathUtils;
+
 import javax.persistence.*;
 
 /**
@@ -24,4 +26,9 @@ public class Version
     public long lastModified;
 
     public String checksum;
+
+    public String getName()
+    {
+        return PathUtils.getName(path);
+    }
 }

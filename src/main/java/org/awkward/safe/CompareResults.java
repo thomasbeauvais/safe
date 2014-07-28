@@ -26,4 +26,9 @@ public class CompareResults
                 ", modified=" + modified +
                 '}';
     }
+
+    public boolean isEmpty()
+    {
+        return modified.isEmpty() && missing.isEmpty();
+    }
 }

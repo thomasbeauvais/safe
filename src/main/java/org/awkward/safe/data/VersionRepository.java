@@ -2,7 +2,6 @@ package org.awkward.safe.data;
 
 import org.awkward.safe.model.Version;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
 
 /**
  * TODO:  Please document properly all classes and methods using the Silbury JavaDoc Guidelines
@@ -11,7 +10,6 @@ import org.springframework.stereotype.Repository;
  * @author Silbury Solutions, Deutschland - Thomas Beauvais (thomas.beauvais@silbury.de)
  * @since 27.07.14
  */
-@Repository
 public interface VersionRepository extends JpaRepository<Version, String>
 {
     Version findByPathOrderByLastModifiedAsc(String path);

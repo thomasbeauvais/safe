@@ -10,6 +10,8 @@ import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -25,7 +27,7 @@ public class DirectoryNode extends Node
     private static final Logger log = LoggerFactory.getLogger(DirectoryNode.class);
 
     @OneToMany(mappedBy = "parent", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    public List<Node> children;
+    public List<Node> children = new ArrayList<Node>();
 
     public void visit(Visitor visitor)
     {
@@ -41,6 +43,8 @@ public class DirectoryNode extends Node
     {
         if (children != null)
         {
+            Collections.sort(children);
+
             for (Node localNode : children)
             {
                 localNode.visit(visitor);
@@ -62,7 +66,7 @@ public class DirectoryNode extends Node
     {
         for (Node node : children)
         {
-            if (node.version.path.equals(version.path))
+            if (node.version.path.equals(path))
             {
                 return node;
             }
@@ -71,18 +75,28 @@ public class DirectoryNode extends Node
         return null;
     }
 
-    public CompareResults compare(DirectoryNode root)
+    public CompareResults compare(DirectoryNode node)
     {
-        final CompareVisitor sourceVisitor = new CompareVisitor(root);
+        final CompareVisitor sourceVisitor = new CompareVisitor(node);
 
         this.visitChildren(sourceVisitor);
 
         return sourceVisitor.getCompareResults();
     }
 
+    public DirectoryNode findRoot()
+    {
+        if (parent == null)
+        {
+            return this;
+        }
+
+        return parent.findRoot();
+    }
+
     @Override
     public String toString()
     {
-        return version.path;
+        return version == null ? super.toString() : version.path;
     }
 }

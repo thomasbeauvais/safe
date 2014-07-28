@@ -28,11 +28,11 @@ public class CompareVisitor implements Visitor
     @Override
     public boolean preVisit(DirectoryNode node)
     {
-        final Node found = directoryNodes.peek().find(node.version.path);
+        final Node found = getCurrent().find(node.version.path);
 
         if (found == null)
         {
-            compareResults.missing.add(node);
+            onMissing(node);
 
             return false;
         }
@@ -51,23 +51,43 @@ public class CompareVisitor implements Visitor
     @Override
     public void visit(FileNode node)
     {
-        final FileNode found = (FileNode) directoryNodes.peek().find(node.version.path);
+        final FileNode found = (FileNode) getCurrent().find(node.version.path);
 
         if (found == null)
         {
-            compareResults.missing.add(node);
+            onMissing(node);
         }
         else if (node.version.lastModified > found.version.lastModified)
         {
             if (!node.version.checksum.equals(found.version.checksum))
             {
-                compareResults.modified.add(node);
+                onModified(found, node);
             }
         }
+    }
+
+    private DirectoryNode getCurrent()
+    {
+        return directoryNodes.peek();
     }
 
     public CompareResults getCompareResults()
     {
         return compareResults;
+    }
+
+    protected void onMissing(DirectoryNode node)
+    {
+        compareResults.missing.add(node);
+    }
+
+    protected void onMissing(FileNode node)
+    {
+        compareResults.missing.add(node);
+    }
+
+    protected void onModified(FileNode found, FileNode node)
+    {
+        compareResults.modified.add(node);
     }
 }

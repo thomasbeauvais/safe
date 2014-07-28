@@ -21,6 +21,7 @@
           <file>file://$MODULE_DIR$/src/main/java/org/awkard/safe/swing/Driver.java</file>
           <file>file://$MODULE_DIR$/src/main/resources/spring.xml</file>
           <file>file://$MODULE_DIR$/src/main/java/org/awkard/safe/spring/SpringConfiguration.java</file>
+          <file>file://$MODULE_DIR$/src/main/resources/spring-server.xml</file>
         </fileset>
       </configuration>
     </facet>
@@ -117,6 +118,15 @@
     <orderEntry type="library" name="Maven: antlr:antlr:2.7.7" level="project" />
     <orderEntry type="library" name="Maven: org.jboss:jandex:1.1.0.Final" level="project" />
     <orderEntry type="library" name="Maven: org.springframework.data:spring-data-jpa:1.7.0.M1" level="project" />
+    <orderEntry type="module-library" scope="TEST">
+      <library>
+        <CLASSES>
+          <root url="jar://$APPLICATION_HOME_DIR$/plugins/testng/lib/testng.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
   </component>
 </module>
 

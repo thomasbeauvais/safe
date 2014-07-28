@@ -4,6 +4,7 @@ import com.sun.jna.platform.win32.VerRsrc;
 import org.awkward.DefaultUnitTest;
 import org.awkward.safe.model.DirectoryNode;
 import org.awkward.safe.model.FileNode;
+import org.awkward.safe.model.Repository;
 import org.awkward.safe.model.Version;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -35,6 +36,9 @@ public class NodeTest extends DefaultUnitTest
     @Autowired
     VersionRepository versionRepository;
 
+    @Autowired
+    RepositoryRepository repositoryRepository;
+
     @Test
     public void path()
     {
@@ -48,10 +52,9 @@ public class NodeTest extends DefaultUnitTest
     {
         assertNotNull(nodeRepository);
         assertNotNull(directoryNodeRepository);
+        assertNotNull(repositoryRepository);
 
-        final DirectoryNode root = local.getRoot();
-
-        directoryNodeRepository.save(root);
+        repositoryRepository.save(local);
     }
 
     @Test
